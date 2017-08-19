@@ -1,0 +1,49 @@
+Start time: 2017-06-29 23:17:05.25366153 +0800 CST
+
+# Reading the basic configuration from "./config.ini":
+          Input file : "./test-data/INP.DAT"
+   Acceleration data : "./test-data/DIAM.ACC"
+         Output file : "./test-data/out1.txt"
+
+# Option NO.     1   is started.
+number of material = 3
+	number of strain values = 11 -- #1 modulus for clay (seed & sun 1989) upper range
+[  Number of strain values = 11 -- #1 modulus for clay (seed & sun 1989) upper range
+    Strains: (G/Gmax : strain)
+[1.000000 : 0.000100; 1.000000 : 0.000300; 1.000000 : 0.001000; 0.981000 : 0.003000; 0.941000 : 0.010000; 0.847000 : 0.030000; 0.656000 : 0.100000; 0.438000 : 0.300000; 0.238000 : 1.000000; 0.144000 : 3.000000; 0.110000 : 10.000000] %!s(PANIC=runtime error: index out of range) %!s(PANIC=runtime error: index out of range)]
+	number of damping values = 11 -- damping for clay (Idriss 1990) -
+[  Number of damping values = 11 -- damping for clay (Idriss 1990) -
+    Dampings: (G/Gmax : damping)
+[0.240000 : 0.000100; 0.420000 : 0.000300; 0.800000 : 0.001000; 1.400000 : 0.003000; 2.800000 : 0.010000; 5.100000 : 0.030000; 9.800000 : 0.100000; 15.500000 : 0.300000; 21.000000 : 1.000000; 25.000000 : 3.160000; 28.000000 : 10.000000] %!s(PANIC=runtime error: index out of range) %!s(PANIC=runtime error: index out of range)]
+	number of strain values = 11 -- #2 modulus for sand (seed & idriss 1970) - upper Range
+[  Number of strain values = 11 -- #1 modulus for clay (seed & sun 1989) upper range
+    Strains: (G/Gmax : strain)
+[1.000000 : 0.000100; 1.000000 : 0.000300; 1.000000 : 0.001000; 0.981000 : 0.003000; 0.941000 : 0.010000; 0.847000 : 0.030000; 0.656000 : 0.100000; 0.438000 : 0.300000; 0.238000 : 1.000000; 0.144000 : 3.000000; 0.110000 : 10.000000]   Number of strain values = 11 -- #2 modulus for sand (seed & idriss 1970) - upper Range
+    Strains: (G/Gmax : strain)
+[1.000000 : 0.000100; 1.000000 : 0.000300; 0.990000 : 0.001000; 0.960000 : 0.003000; 0.850000 : 0.010000; 0.640000 : 0.030000; 0.370000 : 0.100000; 0.180000 : 0.300000; 0.080000 : 1.000000; 0.050000 : 3.000000; 0.035000 : 10.000000] %!s(PANIC=runtime error: index out of range)]
+	number of damping values = 11 -- damping for sand (Idriss 1990) - (about LRng from SI 1970)
+[  Number of damping values = 11 -- damping for clay (Idriss 1990) -
+    Dampings: (G/Gmax : damping)
+[0.240000 : 0.000100; 0.420000 : 0.000300; 0.800000 : 0.001000; 1.400000 : 0.003000; 2.800000 : 0.010000; 5.100000 : 0.030000; 9.800000 : 0.100000; 15.500000 : 0.300000; 21.000000 : 1.000000; 25.000000 : 3.160000; 28.000000 : 10.000000]   Number of damping values = 11 -- damping for sand (Idriss 1990) - (about LRng from SI 1970)
+    Dampings: (G/Gmax : damping)
+[0.240000 : 0.000100; 0.420000 : 0.000300; 0.800000 : 0.001000; 1.400000 : 0.003000; 2.800000 : 0.010000; 5.100000 : 0.030000; 9.800000 : 0.100000; 15.500000 : 0.300000; 21.000000 : 1.000000; 25.000000 : 3.000000; 28.000000 : 10.000000] %!s(PANIC=runtime error: index out of range)]
+	number of strain values = 8 -- #3 ATTENUATION OF  ROCK  AVERAGE
+[  Number of strain values = 11 -- #1 modulus for clay (seed & sun 1989) upper range
+    Strains: (G/Gmax : strain)
+[1.000000 : 0.000100; 1.000000 : 0.000300; 1.000000 : 0.001000; 0.981000 : 0.003000; 0.941000 : 0.010000; 0.847000 : 0.030000; 0.656000 : 0.100000; 0.438000 : 0.300000; 0.238000 : 1.000000; 0.144000 : 3.000000; 0.110000 : 10.000000]   Number of strain values = 11 -- #2 modulus for sand (seed & idriss 1970) - upper Range
+    Strains: (G/Gmax : strain)
+[1.000000 : 0.000100; 1.000000 : 0.000300; 0.990000 : 0.001000; 0.960000 : 0.003000; 0.850000 : 0.010000; 0.640000 : 0.030000; 0.370000 : 0.100000; 0.180000 : 0.300000; 0.080000 : 1.000000; 0.050000 : 3.000000; 0.035000 : 10.000000]   Number of strain values = 8 -- #3 ATTENUATION OF  ROCK  AVERAGE
+    Strains: (G/Gmax : strain)
+[1.000000 : 0.000100; 1.000000 : 0.000300; 0.987500 : 0.001000; 0.952500 : 0.003000; 0.900000 : 0.010000; 0.810000 : 0.030000; 0.725000 : 0.100000; 0.550000 : 1.000000]]
+	number of damping values = 5 -- DAMPING IN ROCK
+[  Number of damping values = 11 -- damping for clay (Idriss 1990) -
+    Dampings: (G/Gmax : damping)
+[0.240000 : 0.000100; 0.420000 : 0.000300; 0.800000 : 0.001000; 1.400000 : 0.003000; 2.800000 : 0.010000; 5.100000 : 0.030000; 9.800000 : 0.100000; 15.500000 : 0.300000; 21.000000 : 1.000000; 25.000000 : 3.160000; 28.000000 : 10.000000]   Number of damping values = 11 -- damping for sand (Idriss 1990) - (about LRng from SI 1970)
+    Dampings: (G/Gmax : damping)
+[0.240000 : 0.000100; 0.420000 : 0.000300; 0.800000 : 0.001000; 1.400000 : 0.003000; 2.800000 : 0.010000; 5.100000 : 0.030000; 9.800000 : 0.100000; 15.500000 : 0.300000; 21.000000 : 1.000000; 25.000000 : 3.000000; 28.000000 : 10.000000]   Number of damping values = 5 -- DAMPING IN ROCK
+    Dampings: (G/Gmax : damping)
+[0.400000 : 0.000100; 0.800000 : 0.001000; 1.500000 : 0.010000; 3.000000 : 0.100000; 4.600000 : 1.000000]]
+# Option NO.     1   has been concluded.
+
+End time:  2017-06-29 23:17:05.254184995 +0800 CST
+Duration of process =  523.465µs
