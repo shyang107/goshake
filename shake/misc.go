@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"shake17g/shake/cfg"
 	"strings"
 	"unsafe"
+
+	"github.com/shyang107/goshake/shake/cfg"
 
 	"github.com/cpmech/gosl/chk"
 )

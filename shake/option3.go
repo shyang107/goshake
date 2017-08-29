@@ -2,8 +2,9 @@ package shake
 
 import (
 	"os"
-	"shake17g/shake/cfg"
 	"strings"
+
+	"github.com/shyang107/goshake/shake/cfg"
 
 	"github.com/cpmech/gosl/chk"
 	"github.com/cpmech/gosl/io"

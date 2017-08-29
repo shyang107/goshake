@@ -6,13 +6,16 @@ import (
 )
 
 const (
-	cfgFileName = "./config.ini"
+	CfgFileName = "./config.ini"
+	Version     = "v0.0.1"
 )
 
 var (
 	conf *goini.Config
 	// Verbose is the state of turn-on/off verbose logging
-	Verbose bool
+	Verbose bool = true
+
+	ColorsOn bool = true
 	// InputFileName is the file name of input-data
 	InputFileName string
 	// AccFileName is the file name of acceleration records
@@ -23,7 +26,7 @@ var (
 
 func init() {
 	Verbose = true
-	conf = goini.SetConfig(cfgFileName)
+	conf = goini.SetConfig(CfgFileName)
 }
 
 // SetVerbose sets the state of Verbose
@@ -41,7 +44,7 @@ func GetConfig() {
 	io.Verbose = Verbose
 	if Verbose {
 		tab := io.ArgsTable(
-			io.Sf("Reading the basic configuration from %q:", cfgFileName),
+			io.Sf("Reading the basic configuration from %q:", CfgFileName),
 			"Input file", "InputFileName", InputFileName,
 			"Acceleration data", "AccFileName", AccFileName,
 			"Output file", "OutputFileName", OutputFileName,

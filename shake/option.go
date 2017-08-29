@@ -3,8 +3,9 @@ package shake
 import (
 	"fmt"
 	"io/ioutil"
-	"shake17g/shake/cfg"
 	"strings"
+
+	"github.com/shyang107/goshake/shake/cfg"
 
 	"github.com/cpmech/gosl/io"
 )

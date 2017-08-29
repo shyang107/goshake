@@ -19,35 +19,35 @@ var (
 	FORMAT = map[int]string{
 		23: "# Option NO. %02d  is started.\n",
 		24: "# Option NO. %02d  has been concluded.\n",
-		100: `  ***********************************************************
-  * SHAKE  --   A COMPUTER PROGRAM FOR EARTHQUAKE RESPONSE  *
-  *             ANALYSIS OF HORIZONTALLY LAYERED SITES      *
-  *             by: Per B. Schnabel & John Lysmer -- 1970   *
-  * ------------------------------------------------------- *
-  * shake85     IBM-PC version of SHAKE                     *
-  *             by: S.S. (Willie) Lai, January 1985         *
-  * ------------------------------------------------------- *
-  * shake88   : New modulus reduction curves for clays added*
-  *             using results from Sun et al (1988)         *
-  *             by: J. I. Sun & Ramin Golesorkhi            *
-  *             February 26, 1988                           *
-  * ------------------------------------------------------- *
-  * SHAKE90/91: Adjust last iteration; Input now is either  *
-  *             Gmax or max Vs; up to 13 material types can *
-  *             be specified by user; up to 50 Layers can   *
-  *             be specified; object motion can be read in  *
-  *             from a separate file and can have user      *
-  *             specified format; Different periods for     *
-  *             response spectral calculations; options     *
-  *             are renumbered; and general cleanup         *
-  *             by: J. I. Sun, I. M. Idriss & P. Dirrim     *
-  *             June 1990 - February 1991                   *
-  * ------------------------------------------------------- *
-  * SHAKE91   : General cleanup and finalization of input/  *
-  *             output format ... etc                       *
-  *             by: I. M. Idriss                            *
-  *             December 1991                               *
-  ***********************************************************`,
+		100: `***********************************************************
+   * SHAKE  --   A COMPUTER PROGRAM FOR EARTHQUAKE RESPONSE  *
+   *             ANALYSIS OF HORIZONTALLY LAYERED SITES      *
+   *             by: Per B. Schnabel & John Lysmer -- 1970   *
+   * ------------------------------------------------------- *
+   * shake85     IBM-PC version of SHAKE                     *
+   *             by: S.S. (Willie) Lai, January 1985         *
+   * ------------------------------------------------------- *
+   * shake88   : New modulus reduction curves for clays added*
+   *             using results from Sun et al (1988)         *
+   *             by: J. I. Sun & Ramin Golesorkhi            *
+   *             February 26, 1988                           *
+   * ------------------------------------------------------- *
+   * SHAKE90/91: Adjust last iteration; Input now is either  *
+   *             Gmax or max Vs; up to 13 material types can *
+   *             be specified by user; up to 50 Layers can   *
+   *             be specified; object motion can be read in  *
+   *             from a separate file and can have user      *
+   *             specified format; Different periods for     *
+   *             response spectral calculations; options     *
+   *             are renumbered; and general cleanup         *
+   *             by: J. I. Sun, I. M. Idriss & P. Dirrim     *
+   *             June 1990 - February 1991                   *
+   * ------------------------------------------------------- *
+   * SHAKE91   : General cleanup and finalization of input/  *
+   *             output format ... etc                       *
+   *             by: I. M. Idriss                            *
+   *             December 1991                               *
+   ***********************************************************`,
 	}
 )
 
