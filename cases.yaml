@@ -1,0 +1,14 @@
+# - head: 'Case #1'
+#   input:
+#     datapath: ./test-data/INP.DAT
+#     accpath: ./test-data/DIAM.ACC
+#   output:
+#     datapath: ./test-data/out1.txt
+#     punchpath: ./test-data/pun1.txt
+- head: 'Case #2'
+  input:
+    datapath: ./test-data/INP.DAT
+    accpath: ./test-data/DIAM.ACC
+  output:
+    datapath: ./test-data/out1.txt
+    punchpath: ./test-data/pun1.txt

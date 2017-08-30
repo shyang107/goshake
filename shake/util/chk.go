@@ -48,7 +48,7 @@ func GetErrMessage(err error) string {
 func CheckErr(err error) {
 	if err != nil {
 		// perr(getErrMessage(err))
-		panic(err)
+		Panic(err.Error())
 	}
 }
 

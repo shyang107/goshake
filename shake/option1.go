@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cpmech/gosl/io"
+	"github.com/shyang107/goshake/shake/util"
 )
 
 const (
@@ -63,37 +63,37 @@ func (r reductionValues) valTable(title, shead, ghead string) string {
 	nval := len(r.Values)
 	var sizes = make([]int, nval+1)
 	sizes[0] = len(shead)
-	sizes[0] = imax(sizes[0], len(ghead))
+	sizes[0] = util.Imax(sizes[0], len(ghead))
 	n := sizes[0]
 	for i := 0; i < nval; i++ {
-		sizes[i+1] = len(io.Sf("%v", r.Values[i]))
-		sizes[i+1] = imax(sizes[i+1], len(io.Sf("%v", r.GRT[i])))
+		sizes[i+1] = len(util.Sf("%v", r.Values[i]))
+		sizes[i+1] = util.Imax(sizes[i+1], len(util.Sf("%v", r.GRT[i])))
 		n += sizes[i+1]
 		n++
 	}
 	n += 2 // for " ]"
 	l := len(title)
 	m := (n - l) / 2
-	tab := io.StrThickLine(n)
-	tab += io.StrSpaces(m)
+	tab := util.StrThickLine(n)
+	tab += util.StrSpaces(m)
 	tab += title + "\n"
-	sNumber := io.Sf("Number of values = %d", len(r.Values))
+	sNumber := util.Sf("Number of values = %d", len(r.Values))
 	ln := len(sNumber)
 	mn := (n - ln) / 2
-	tab += io.StrSpaces(mn)
+	tab += util.StrSpaces(mn)
 	tab += sNumber + "\n"
-	tab += io.StrThinLine(n)
-	tab += io.Sf("%*s", sizes[0], shead)
+	tab += util.StrThinLine(n)
+	tab += util.Sf("%*s", sizes[0], shead)
 	for i := 0; i < nval; i++ {
-		tab += io.Sf(" %*v", sizes[i+1], r.Values[i])
+		tab += util.Sf(" %*v", sizes[i+1], r.Values[i])
 	}
 	tab += " ]\n"
-	tab += io.Sf("%*s", sizes[0], ghead)
+	tab += util.Sf("%*s", sizes[0], ghead)
 	for i := 0; i < nval; i++ {
-		tab += io.Sf(" %*v", sizes[i+1], r.GRT[i])
+		tab += util.Sf(" %*v", sizes[i+1], r.GRT[i])
 	}
 	tab += " ]\n"
-	tab += io.StrThickLine(n)
+	tab += util.StrThickLine(n)
 	return tab
 }
 
@@ -109,73 +109,75 @@ func (s dampingValues) String() string {
 }
 
 func (dsp *DynamicSoilProperty) read(lines []string, no *int) {
+	util.DebugPrintCaller()
+
 	var nmat int
 	_, err := fmt.Sscanf(lines[*no], "%5d", &nmat)
-	check(err)
+	util.CheckErr(err)
 	*no++
-	io.Pf("%15s = %d\n", "number of material", nmat)
+	util.Pf("%15s = %d\n", "number of material", nmat)
 	if dsp.Number > MaxMaterial {
 		err := fmt.Errorf("number of material (%d) > %d", nmat, MaxMaterial)
-		check(err)
+		util.CheckErr(err)
 	}
 	//
 	dsp.Number = nmat
 	dsp.STN = make([]strainValues, dsp.Number)
 	dsp.DMP = make([]dampingValues, dsp.Number)
 	for i := 0; i < dsp.Number; i++ {
-		io.Pfgreen("Material #%d:\n", i+1)
+		util.Pfgreen("Material #%d:\n", i+1)
 		dsp.readStrains(i, lines, no)
 		dsp.readDampings(i, lines, no)
 	}
-	v := io.SplitInts(lines[*no])
+	v := util.SplitInts(lines[*no])
 	*no++
 	dsp.N = v[0]
 	dsp.ID = v[1:]
-	tab := io.ArgsTable(
+	tab := util.ArgsTable(
 		"",
 		"number of material to be used", "N", dsp.N,
-		"naterial number which will be used", "ID[]", io.IntSf("%v", dsp.ID))
-	io.Pf("%v", tab)
+		"naterial number which will be used", "ID[]", util.IntSf("%v", dsp.ID))
+	util.Pf("%v", tab)
 }
 
 func (dsp *DynamicSoilProperty) readStrains(i int, lines []string, no *int) {
 	_, err := fmt.Sscanf(lines[*no], "%5d", &dsp.STN[i].Number)
-	check(err)
+	util.CheckErr(err)
 	if dsp.STN[i].Number > MaxStrainValues {
 		err := fmt.Errorf("number of strian values (%d) > %d", dsp.STN[i].Number, MaxStrainValues)
-		check(err)
+		util.CheckErr(err)
 	}
 	dsp.STN[i].Identification = strings.Trim(lines[*no][5:], " ")
 	*no++
-	// io.Pf("\tnumber of strain values = %d -- %s\n", dsp.STN[i].Number, dsp.STN[i].Identification)
+	// util.Pf("\tnumber of strain values = %d -- %s\n", dsp.STN[i].Number, dsp.STN[i].Identification)
 	dsp.STN[i].Values = readOpt1Values(lines, no, dsp.STN[i].Number)
-	// io.Pf("\t  mat.%2d: %v : %d\n", i+1, strains, len(strains))
+	// util.Pf("\t  mat.%2d: %v : %d\n", i+1, strains, len(strains))
 	dsp.STN[i].GRT = readOpt1Values(lines, no, dsp.STN[i].Number)
-	// io.Pf("\t  mat.%2d: %v : %d\n", i+1, stngratios, len(stngratios))
-	io.Pf("%s", dsp.STN[i])
+	// util.Pf("\t  mat.%2d: %v : %d\n", i+1, stngratios, len(stngratios))
+	util.Pf("%s", dsp.STN[i])
 }
 
 func (dsp *DynamicSoilProperty) readDampings(i int, lines []string, no *int) {
 	_, err := fmt.Sscanf(lines[*no], "%5d", &dsp.DMP[i].Number)
-	check(err)
+	util.CheckErr(err)
 	if dsp.DMP[i].Number > MaxDampingValues {
 		err := fmt.Errorf("number of damping values (%d) > %d", dsp.DMP[i].Number, MaxDampingValues)
-		check(err)
+		util.CheckErr(err)
 	}
 	dsp.DMP[i].Identification = strings.Trim(lines[*no][5:], " ")
 	*no++
-	// io.Pf("\tnumber of damping values = %d -- %s\n", dsp.DMP[i].Number, dsp.DMP[i].Identification)
+	// util.Pf("\tnumber of damping values = %d -- %s\n", dsp.DMP[i].Number, dsp.DMP[i].Identification)
 	dsp.DMP[i].Values = readOpt1Values(lines, no, dsp.DMP[i].Number)
-	// io.Pf("\t  mat.%2d: %v : %d\n", i+1, strains, len(strains))
+	// util.Pf("\t  mat.%2d: %v : %d\n", i+1, strains, len(strains))
 	dsp.DMP[i].GRT = readOpt1Values(lines, no, dsp.DMP[i].Number)
-	// io.Pf("\t  mat.%2d: %v : %d\n", i+1, stngratios, len(stngratios))
-	io.Pf("%s", dsp.DMP[i])
+	// util.Pf("\t  mat.%2d: %v : %d\n", i+1, stngratios, len(stngratios))
+	util.Pf("%s", dsp.DMP[i])
 }
 
 func readOpt1Values(lines []string, no *int, nStrains int) []float64 {
 	var stn []float64
 	for i := 0; i < nStrains; i += 8 {
-		values := io.SplitFloats(lines[*no])
+		values := util.SplitFloats(lines[*no])
 		stn = append(stn, values...)
 		*no++
 	}

@@ -4,6 +4,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/shyang107/go-twinvoices/util"
 	"github.com/shyang107/goshake/shake/cfg"
 
 	"github.com/cpmech/gosl/chk"
@@ -61,7 +62,7 @@ func (im InputMotion) String() string {
 	} else {
 		strAcc = "as the following..."
 	}
-	tab := io.ArgsTable(
+	tab := util.ArgsTable(
 		im.Identification,
 		"number of acc. values", "NV", im.NV,
 		"number of values for use in FFT", "MA", im.MA,
@@ -105,17 +106,17 @@ func (im InputMotion) String() string {
 			}
 			tab += "\n"
 		}
-		tab += io.StrThickLine(n)
+		tab += util.StrThickLine(n)
 	}
 	return tab
 }
 
-func (im *InputMotion) read(lines []string, no *int) {
-	im.NV = io.Atoi(strings.Trim(lines[*no][0:5], " "))
-	im.MA = io.Atoi(strings.Trim(lines[*no][5:10], " "))
-	im.Dt = io.Atof(strings.Trim(lines[*no][10:20], " "))
+func (im *InputMotion) read(c *cfg.Case, lines []string, no *int) {
+	im.NV = util.Atoi(strings.Trim(lines[*no][0:5], " "))
+	im.MA = util.Atoi(strings.Trim(lines[*no][5:10], " "))
+	im.Dt = util.Atof(strings.Trim(lines[*no][10:20], " "))
 	im.AccFilename = strings.Trim(lines[*no][20:50], " ")
-	chkAccFilename(&im.AccFilename)
+	chkAccFilename(c, &im.AccFilename)
 	im.Format = strings.Trim(lines[*no][50:], " ")
 	*no++
 	//
@@ -159,9 +160,9 @@ func chkMaxAcc(sFactor, sPGA string) (factor, pga float64) {
 	return
 }
 
-func chkAccFilename(afn *string) {
+func chkAccFilename(c *cfg.Case, afn *string) {
 	afname := os.ExpandEnv(*afn)
-	cfname := os.ExpandEnv(cfg.AccFileName)
+	cfname := os.ExpandEnv(c.Input.AccPath)
 	// io.Pf("afname = %s   cfname = %s\n", afname, cfname)
 	if _, aerr := os.Stat(afname); os.IsNotExist(aerr) {
 		if _, cerr := os.Stat(cfname); cerr == nil {

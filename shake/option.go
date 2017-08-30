@@ -3,11 +3,11 @@ package shake
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/shyang107/goshake/shake/cfg"
-
-	"github.com/cpmech/gosl/io"
+	"github.com/shyang107/goshake/shake/util"
 )
 
 var (
@@ -50,43 +50,43 @@ type ComputeFourierAmplitude struct {
 }
 
 // ReadOptions read the opetions
-func (o *OptionAll) ReadOptions() {
-	b, err := ioutil.ReadFile(cfg.InputFileName)
-	check(err)
-	str := strings.Replace(toString(b), "\r", "", -1)
+func (o *OptionAll) ReadOptions(c *cfg.Case) {
+	b, err := ioutil.ReadFile(os.ExpandEnv(c.Input.DataPath))
+	util.CheckErr(err)
+	str := strings.Replace(util.BtoStr(b), "\r", "", -1)
 	lines := strings.Split(str, "\n")
-	o.Read(lines)
+	o.Read(c, lines)
 }
 
-func (o *OptionAll) Read(lines []string) {
+func (o *OptionAll) Read(c *cfg.Case, lines []string) {
 	var no int
 	stop := false
 	for !stop {
-		stop = o.readData(lines, &no) // read Option #N data
+		stop = o.readData(c, lines, &no) // read Option #N data
 	}
 }
 
-func (o *OptionAll) readData(lines []string, no *int) (stop bool) {
+func (o *OptionAll) readData(c *cfg.Case, lines []string, no *int) (stop bool) {
 	var hopt optionIndentification
 	hopt.Identification = strings.Trim(lines[*no], " ")
 	*no++
 	_, err := fmt.Sscanf(lines[*no], "%5d", &hopt.Number)
-	check(err)
-	io.PfCyan(FORMAT[23], hopt.Number)
+	util.CheckErr(err)
+	util.PfCyan(FORMAT[23], hopt.Number)
 	if hopt.Number == 0 {
-		io.PfYel("%s\n", hopt.Identification)
-		io.PfBlue(FORMAT[24], hopt.Number)
-		io.Pfdyel2("%s", io.StrThickLine(60))
+		util.PfYel("%s\n", hopt.Identification)
+		util.PfBlue(FORMAT[24], hopt.Number)
+		util.Pfdyel2("%s", util.StrThickLine(60))
 		return true
 	}
 	*no++
-	o.readOptionNo(lines, no, hopt)
-	io.PfBlue(FORMAT[24], hopt.Number)
-	io.Pfdyel2("%s", io.StrThickLine(60))
+	o.readOptionNo(c, lines, no, hopt)
+	util.PfBlue(FORMAT[24], hopt.Number)
+	util.Pfdyel2("%s", util.StrThickLine(60))
 	return false
 }
 
-func (o *OptionAll) readOptionNo(lines []string, no *int, op optionIndentification) {
+func (o *OptionAll) readOptionNo(c *cfg.Case, lines []string, no *int, op optionIndentification) {
 	switch op.Number {
 	case 1: // Option#1: dynamic soil property
 		var dsp = new(DynamicSoilProperty)
@@ -101,7 +101,7 @@ func (o *OptionAll) readOptionNo(lines []string, no *int, op optionIndentificati
 	case 3: // Option#3: input(object) motion
 		var im = new(InputMotion)
 		im.Identification = op.Identification
-		im.read(lines, no)
+		im.read(c, lines, no)
 		o.IM = im
 	case 4: // Option#4: assignment of object motion
 		var aom = new(AssignObjectMotion)
@@ -118,7 +118,7 @@ func (o *OptionAll) readOptionNo(lines []string, no *int, op optionIndentificati
 		sa.Identification = op.Identification
 		sa.read(lines, no)
 		// o.SA = sa
-		io.Pfred("all of option 6:\n")
+		util.Glog.Debugf("all of option 6:\n")
 		if o.SA == nil {
 			o.SA = sa
 		} else {
@@ -126,19 +126,19 @@ func (o *OptionAll) readOptionNo(lines []string, no *int, op optionIndentificati
 			o.SA.Mode = append(o.SA.Mode, sa.Mode...)
 			o.SA.Type = append(o.SA.Type, sa.Type...)
 		}
-		io.Pfpink("%v\n", o.SA)
+		util.Glog.Debugf("%v\n", o.SA.String())
 	case 7: // Option#7: computational of shear stress or strain time history at top if specified sublayers
 		var ss = new(ShearStressOrStrain)
 		ss.Identification = op.Identification
 		ss.read(lines, no)
 		// o.SS = ss
-		io.Pfred("all of option 7:\n")
+		util.Glog.Debugf("all of option 7:\n")
 		if o.SS == nil {
 			o.SS = ss
 		} else {
 			o.SS.OPSet = append(o.SS.OPSet, ss.OPSet...)
 		}
-		io.Pfpink("%v\n", o.SS)
+		util.Glog.Debugf("%v\n", o.SS)
 	case 9: // Option#9: compute response spectrum
 		var ss = new(ComputeResponseSpectrum)
 		ss.Identification = op.Identification

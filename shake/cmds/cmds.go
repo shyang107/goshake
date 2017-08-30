@@ -14,8 +14,8 @@ import (
 
 // Init uses to initial all program
 func Init() {
-	util.DebugPrintCaller()
 	util.InitLogger()
+	util.DebugPrintCaller()
 
 	sk.Options = new(sk.OptionAll)
 
@@ -31,16 +31,16 @@ func Init() {
 	// app.Description = `Transfer the Fortan ed. to Go ed. of SHAKE91`
 	app.Description = sk.FORMAT[100]
 
-	app.Commands = []cli.Command{
-		ExecuteCommand(),
-	}
+	// app.Commands = []cli.Command{
+	// 	ExecuteCommand(),
+	// }
 
 	app.Action = appAction
 
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:  "config,C",
-			Usage: `assign the specified config-filename`,
+			Name:  "cases,C",
+			Usage: `assign the specified case path including filename`,
 		},
 		cli.StringFlag{
 			Name: "verbose,V",
@@ -61,18 +61,20 @@ func Init() {
 }
 
 func checkVerbose(c *cli.Context) {
+	util.DebugPrintCaller()
+
 	level := strings.ToLower(c.GlobalString("verbose")) // check command line options: "verbose"
 	// util.Glog.Debugf("log level: %s\n", level)
 	setglog(level)
 }
 
 func setglog(level string) {
+	util.DebugPrintCaller()
+
 	if len(level) > 0 {
 		cfg.Verbose, util.Verbose = true, true
 		// util.ColorsOn = sk.Cfg.ColorsOn
 	}
-
-	cfg.SetVerbose(true)
 
 	switch level {
 	case "disable":
@@ -85,7 +87,19 @@ func setglog(level string) {
 	default:
 		level = "info"
 	}
+	util.Glog.Infof("log level: %s", level)
 	util.Glog.SetLevel(level)
+}
+
+func checkCase(c *cli.Context) (casesPath string) {
+	util.DebugPrintCaller()
+
+	casesPath = c.GlobalString("cases")
+	if len(casesPath) == 0 {
+		casesPath = cfg.DefaultCasesPath
+	}
+	casesPath = os.ExpandEnv(casesPath)
+	return casesPath
 }
 
 func appAction(c *cli.Context) error {
@@ -93,21 +107,27 @@ func appAction(c *cli.Context) error {
 
 	util.DebugPrintCaller()
 
-	cfg.GetConfig()
+	casesPath := checkCase(c)
 
-	if err := appExecute(); err != nil { // run procedures of program
-		// ut.Pwarn(err.Error())
-		util.DebugPrintCaller()
-		util.Glog.Fatal(err.Error())
+	cases := cfg.GetConfig(casesPath)
+
+	for i, c := range cases {
+		title := fmt.Sprintf("Case #%d - ", i+1)
+		util.Glog.Infof("\n%s", c.Table(title))
+		if err := executeCase(c); err != nil { // run procedures of program
+			// ut.Pwarn(err.Error())
+			util.DebugPrintCaller()
+			util.Glog.Fatal(err.Error())
+		}
 	}
 	return nil
 }
 
 //
-func appExecute() (err error) {
+func executeCase(c *cfg.Case) (err error) {
 	util.DebugPrintCaller()
 
-	sk.Options.ReadOptions()
+	sk.Options.ReadOptions(c)
 
 	return nil
 }

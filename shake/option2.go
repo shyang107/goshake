@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/cpmech/gosl/io"
+	"github.com/shyang107/go-twinvoices/util"
 )
 
 // SoilProfile is Option#2 that the data for soil profile
@@ -46,13 +47,13 @@ func (sp SoilProfile) String() string {
 		sizes[i] = len(heads[i])
 	}
 	for i := 0; i < nlines; i++ {
-		sizes[0] = imax(sizes[0], len(io.Sf("%v", sp.Layer[i].ID)))
-		sizes[1] = imax(sizes[1], len(io.Sf("%v", sp.Layer[i].SID)))
-		sizes[2] = imax(sizes[2], len(io.Sf("%v", sp.Layer[i].Thick)))
-		sizes[3] = imax(sizes[3], len(io.Sf("%v", sp.Layer[i].Gmax)))
-		sizes[4] = imax(sizes[4], len(io.Sf("%v", sp.Layer[i].Damping0)))
-		sizes[5] = imax(sizes[5], len(io.Sf("%v", sp.Layer[i].UnitWeight)))
-		sizes[6] = imax(sizes[6], len(io.Sf("%v", sp.Layer[i].Vsmax)))
+		sizes[0] = util.Imax(sizes[0], len(io.Sf("%v", sp.Layer[i].ID)))
+		sizes[1] = util.Imax(sizes[1], len(io.Sf("%v", sp.Layer[i].SID)))
+		sizes[2] = util.Imax(sizes[2], len(io.Sf("%v", sp.Layer[i].Thick)))
+		sizes[3] = util.Imax(sizes[3], len(io.Sf("%v", sp.Layer[i].Gmax)))
+		sizes[4] = util.Imax(sizes[4], len(io.Sf("%v", sp.Layer[i].Damping0)))
+		sizes[5] = util.Imax(sizes[5], len(io.Sf("%v", sp.Layer[i].UnitWeight)))
+		sizes[6] = util.Imax(sizes[6], len(io.Sf("%v", sp.Layer[i].Vsmax)))
 	}
 	var n int
 	var strfmt string

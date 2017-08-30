@@ -35,8 +35,8 @@ func BytesSizeToString(byteCount int) string {
 	return strnum
 }
 
-// ConvertBytesToString convert []byte to string
-func ConvertBytesToString(bs []byte) string {
+// BytesToString convert []byte to string
+func BytesToString(bs []byte) string {
 	return *(*string)(unsafe.Pointer(&bs))
 }
 
@@ -252,5 +252,71 @@ func StrThinLine(n int) (l string) {
 // StrSpaces returns a line with spaces
 func StrSpaces(n int) (l string) {
 	l = strings.Repeat(" ", n)
+	return
+}
+
+// SplitKeys splits keys separeted by spaces
+func SplitKeys(keys string) []string {
+	return strings.Split(keys, " ")
+}
+
+// SplitSpacesQuoted splits string with quoted substrings. e.g. "  a,b, 'c', \"d\"  "
+func SplitSpacesQuoted(str string) (res []string) {
+	lastQuote := rune(0)
+	f := func(c rune) bool {
+		switch {
+		case c == lastQuote:
+			lastQuote = rune(0)
+			return false
+		case lastQuote != rune(0):
+			return false
+		case unicode.In(c, unicode.Quotation_Mark):
+			lastQuote = c
+			return false
+		default:
+			return unicode.IsSpace(c)
+
+		}
+	}
+	return strings.FieldsFunc(str, f)
+}
+
+// SplitWithinParentheses extracts arguments (substrings) within brackets
+// e.g.: "(arg1, (arg2.1, arg2.2),  arg3, arg4, (arg5.1,arg5.2,  arg5.3 ) )"
+func SplitWithinParentheses(s string) (res []string) {
+	trim := func(l, pfix, sfix string) string {
+		l = strings.TrimSpace(l)
+		l = strings.TrimPrefix(l, pfix)
+		l = strings.TrimSuffix(l, sfix)
+		return l
+	}
+	s = trim(s, "(", ")")
+	s = strings.Replace(s, "(", "'", -1)
+	s = strings.Replace(s, ")", "'", -1)
+	s = strings.Replace(s, ",", " ", -1)
+	res = SplitSpacesQuoted(s)
+	for i := 0; i < len(res); i++ {
+		res[i] = trim(res[i], "'", "'")
+	}
+	return
+}
+
+// SplitInts splits space-separated integers
+func SplitInts(str string) (res []int) {
+	vals := strings.Fields(str)
+	res = make([]int, len(vals))
+	for i, v := range vals {
+		res[i] = Atoi(v)
+	}
+	return
+}
+
+// SplitFloats splits space-separated float numbers
+func SplitFloats(str string) (res []float64) {
+	vals := strings.Fields(str)
+	res = make([]float64, len(vals))
+	for i, v := range vals {
+		res[i] = Atof(v)
+	}
 	return
 }

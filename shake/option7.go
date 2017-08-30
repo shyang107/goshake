@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/cpmech/gosl/io"
+	"github.com/shyang107/go-twinvoices/util"
 )
 
 // ShearStressOrStrain is Option#7 for sublayer at top which time history of shear stress
@@ -26,15 +27,15 @@ func (s ShearStressOrStrain) String() string {
 	}
 	for j := 0; j < len(s.OPSet); j++ {
 		for i := 0; i < 2; i++ {
-			sizes[0] = imax(sizes[0], len(io.Sf("%v", s.OPSet[j][i].ID)))
-			sizes[1] = imax(sizes[1], len(io.Sf("%v", s.OPSet[j][i].Type)))
-			sizes[2] = imax(sizes[2], len(io.Sf("%v", s.OPSet[j][i].THMode)))
-			sizes[3] = imax(sizes[3], len(io.Sf("%v", s.OPSet[j][i].Number)))
-			sizes[4] = imax(sizes[4], len(io.Sf("%v", s.OPSet[j][i].Identification)))
+			sizes[0] = util.Imax(sizes[0], len(io.Sf("%v", s.OPSet[j][i].ID)))
+			sizes[1] = util.Imax(sizes[1], len(io.Sf("%v", s.OPSet[j][i].Type)))
+			sizes[2] = util.Imax(sizes[2], len(io.Sf("%v", s.OPSet[j][i].THMode)))
+			sizes[3] = util.Imax(sizes[3], len(io.Sf("%v", s.OPSet[j][i].Number)))
+			sizes[4] = util.Imax(sizes[4], len(io.Sf("%v", s.OPSet[j][i].Identification)))
 		}
 	}
 	sizes[4] += 3
-	n := isum(sizes) + len(sizes)
+	n := util.Isum(sizes...) + len(sizes)
 	l := len(title)
 	m := (n - l) / 2
 	tab := io.StrSpaces(m)
@@ -81,14 +82,14 @@ func ssoToString(ss [2]SoSOutput) string {
 		sizes[i] = len(sshead[i])
 	}
 	for i := 0; i < 2; i++ {
-		sizes[0] = imax(sizes[0], len(io.Sf("%v", ss[i].ID)))
-		sizes[1] = imax(sizes[1], len(io.Sf("%v", ss[i].Type)))
-		sizes[2] = imax(sizes[2], len(io.Sf("%v", ss[i].THMode)))
-		sizes[3] = imax(sizes[3], len(io.Sf("%v", ss[i].Number)))
-		sizes[4] = imax(sizes[4], len(io.Sf("%v", ss[i].Identification)))
+		sizes[0] = util.Imax(sizes[0], len(io.Sf("%v", ss[i].ID)))
+		sizes[1] = util.Imax(sizes[1], len(io.Sf("%v", ss[i].Type)))
+		sizes[2] = util.Imax(sizes[2], len(io.Sf("%v", ss[i].THMode)))
+		sizes[3] = util.Imax(sizes[3], len(io.Sf("%v", ss[i].Number)))
+		sizes[4] = util.Imax(sizes[4], len(io.Sf("%v", ss[i].Identification)))
 	}
 	sizes[4] += 3
-	n := isum(sizes) + len(sizes)
+	n := util.Isum(sizes...) + len(sizes)
 	tab := io.StrThickLine(n)
 	for i := 0; i < len(sshead); i++ {
 		tab += io.Sf(" %*s", sizes[i], sshead[i])
