@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/shyang107/goshake/shake/cmds"
-	"github.com/shyang107/goshake/shake/util"
+	util "github.com/shyang107/gout"
 )
 
 func main() {

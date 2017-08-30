@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/cpmech/gosl/io"
-	"github.com/shyang107/go-twinvoices/util"
+	"github.com/shyang107/util"
 )
 
 // ShearStressOrStrain is Option#7 for sublayer at top which time history of shear stress

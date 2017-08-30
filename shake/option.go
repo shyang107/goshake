@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/shyang107/goshake/shake/cfg"
-	"github.com/shyang107/goshake/shake/util"
+	"github.com/shyang107/util"
 )
 
 var (

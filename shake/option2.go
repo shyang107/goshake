@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/cpmech/gosl/io"
-	"github.com/shyang107/go-twinvoices/util"
+	"github.com/shyang107/util"
 )
 
 // SoilProfile is Option#2 that the data for soil profile

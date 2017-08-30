@@ -1,7 +1,7 @@
 package cfg
 
 import (
-	"github.com/shyang107/goshake/shake/util"
+	"github.com/shyang107/util"
 	"github.com/widuu/goini"
 	yaml "gopkg.in/yaml.v2"
 )

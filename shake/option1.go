@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/shyang107/goshake/shake/util"
+	"github.com/shyang107/util"
 )
 
 const (
